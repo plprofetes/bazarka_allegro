@@ -1,0 +1,18 @@
+allegro:
+  general_hash:
+    fid: 1
+    fvalue-string: 'dupa'
+    fvalue-int: 0
+    fvalue-float: 0
+    fvalue-image: 0
+    fvalue-datetime: 0
+    fvalue-date: ''
+    fvalue-range-int:
+      fvalue-range-int-min: 0
+      fvalue-range-int-max: 0
+    fvalue-range-float:
+      fvalue-range-float-min: 0
+      fvalue-range-float-max: 0
+    fvalue-range-date:
+      fvalue-range-date-min: ''
+      fvalue-range-date-max: ''

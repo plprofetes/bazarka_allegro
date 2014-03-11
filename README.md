@@ -30,7 +30,6 @@ _Connecting to client_
       config.password = 'secret'
       config.webapi_key = '1234'
       config.country_code = 1
-      config.local_version = 1234
     end
  	
     client.login
@@ -48,18 +47,15 @@ _Search_
     
     search.search_query(search_string, options)#reference allegro api
 
+_Auction_
 
+    auction = Allegro::WebApi::Auction.new(client)
+
+Metoda pozwala na pobranie listy pól formularza sprzedaży dostępnych we wskazanym kraju. Wybrane pola mogą następnie posłużyć np. do zbudowania i wypełnienia formularza wystawienia nowej oferty z poziomu metody doNewAuctionExt.
+    auction.do_get_sell_form_fields
  
     
     
  
 
 
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
