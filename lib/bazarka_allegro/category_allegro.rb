@@ -32,7 +32,7 @@ module BazarkaAllegro
 
 
     def get_fields_for_category(category_id)
-      clear_fetaures
+      clear_features
       fields = @allegro.do_get_sell_form_fields_for_category(category_id).body[:do_get_sell_form_fields_for_category_response][:sell_form_fields_for_category][:sell_form_fields_list][:item]
       @category_fields = fields
       #@fields.each do |field|
