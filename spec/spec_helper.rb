@@ -30,6 +30,7 @@ def set_client
     config.password = 'Bazarka123456'
     config.webapi_key = '5c5e4950'
     config.country_code = 1
+    #config.country_code = 228
   end
 end
 

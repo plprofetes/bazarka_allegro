@@ -6,6 +6,7 @@ module BazarkaAllegro
       @allegro = Hooks::Category.new(client)
       @errors = nil
       @client = client
+      @category_fields = nil
     end
 
 
@@ -31,8 +32,9 @@ module BazarkaAllegro
 
 
     def get_fields_for_category(category_id)
+      clear_fetaures
       fields = @allegro.do_get_sell_form_fields_for_category(category_id).body[:do_get_sell_form_fields_for_category_response][:sell_form_fields_for_category][:sell_form_fields_list][:item]
-      fields
+      @category_fields = fields
       #@fields.each do |field|
       #  field.each do |key, value|
       #    if key.to_s == "sell_form_opt" && value.to_i == 1
@@ -52,9 +54,16 @@ module BazarkaAllegro
       required_fields
     end
 
+    def to_json
+      {fields: @category_fields}
+    end
+
     private
     def clear_errors
       @errors = nil
+    end
+    def clear_features
+      @category_fields = nil
     end
 
   end
