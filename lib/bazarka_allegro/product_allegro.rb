@@ -144,7 +144,7 @@ module BazarkaAllegro
       else
         response = @allegro.do_finish_item(product.extension_for_products.where(key: 'allegro').first.ebay_id)
       end
-      Rails.logger.info response.inspect
+      #Rails.logger.info response.inspect
       response
     end
 
@@ -163,7 +163,7 @@ module BazarkaAllegro
       end
 
       response = @ebay.complete_sale(hash)
-      Rails.logger.info response.inspect
+      #Rails.logger.info response.inspect
       response
     end
 
@@ -181,8 +181,8 @@ module BazarkaAllegro
       new_item_hash = {item: []}
       EXTENSIONS[:allegro]['extension_for_products_details'].each do |i|
 
-        Rails.logger.info "!!!!!!!!!!!!!!!!!!!"
-        Rails.logger.info "!!!!!!! #{i.inspect}   !!!!!!!!!!!!"
+        #Rails.logger.info "!!!!!!!!!!!!!!!!!!!"
+        #Rails.logger.info "!!!!!!! #{i.inspect}   !!!!!!!!!!!!"
         my_item = get_skeleton
         my_item[:fid] = i[1]['id']
         type = i[1]['type']

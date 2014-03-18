@@ -9,17 +9,17 @@ module BazarkaAllegro
     def initialize(store, general_credentials = {})
       if !store.nil?
         extension = store.extensions.where(key: :allegro).first
-        Rails.logger.info "------------------"
-        Rails.logger.info extension
-        Rails.logger.info "------------------"
+        #Rails.logger.info "------------------"
+        #Rails.logger.info extension
+        #Rails.logger.info "------------------"
         self.user_login = extension.details['user_login']
         self.webapi_key = extension.details['webapi_key']
         self.country_code = extension.details['country_code']
         self.password = extension.details['password']
 
       elsif !general_credentials.blank?
-        Rails.logger.info  general_credentials
-        puts general_credentials
+        #Rails.logger.info  general_credentials
+        #puts general_credentials
         self.user_login = general_credentials[:user_login]
         self.webapi_key = general_credentials[:webapi_key]
         self.country_code = general_credentials[:country_code]

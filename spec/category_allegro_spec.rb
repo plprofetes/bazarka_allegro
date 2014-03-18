@@ -34,7 +34,7 @@ describe BazarkaAllegro::CategoryAllegro do
 
   it 'stworz plik yamlowy z polami do wypelnienia' do
     fields = @category_allegro.get_fields_for_category(20585)
-    puts fields
+    #puts fields
     File.open("j.yml", 'w+', external_encoding: 'utf-8') do |f|
       f.write(fields.to_yaml)
     end
