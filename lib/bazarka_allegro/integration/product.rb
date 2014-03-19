@@ -67,9 +67,9 @@ module BazarkaAllegro
       end
 
       def options
-        store = self.store
+        #store = self.store
         extension_for_product = self.extension_for_products.where(key: :allegro).first
-        extension = store.extensions.where(key: :allegro).first
+        #extension = store.extensions.where(key: :allegro).first
 
         #shipping = []
         #EXTENSIONS[:allegro]['extension_for_products_details']['shipping']['length'].to_i.times do |i|
@@ -79,60 +79,14 @@ module BazarkaAllegro
         #end
 
         hash = {
-          auction_title: self.name,
-          description: self.description,
-          category_id: extension_for_product.category_id.to_i,
-          starting_date: extension_for_product.starting_date,
-          listing_time: extension_for_product.listing_time,
-          #quantity: self.quantity,
-          quantity: extension_for_product.quantity,
-          #starting_price: self.price.cents+Money.parse(extension_for_product.manipulation_cost).cents,
-          #starting_price: self.price.cents,
-          #minimal_price: extension_for_product.minimal_price,
-          buy_now_price: extension_for_product.buy_now_price,
-          bold_title:  extension_for_product.bold_title,
-          thumbnail:  extension_for_product.thumbnail,
-          highlight:  extension_for_product.highlight,
-          featured:  extension_for_product.featured,
-          category_page:  extension_for_product.category_page,
-          main_page:  extension_for_product.main_page,
-          watermark:  extension_for_product.watermark,
-          shipment_costs_coverage: extension_for_product.shipment_costs_coverage,
-          shipment_abroad: extension_for_product.shipment_abroad,
-          invoice_issue: extension_for_product.invoice_issue,
-          advance_payment: extension_for_product.advance_payment,
-          bank_account_1: extension_for_product.bank_account_1,
-          bank_account_2: extension_for_product.bank_account_2,
-          unit_of_measure: extension_for_product.unit_of_measure,
-          #postal_code: store.postal_code,
-          postal_code: extension_for_product.postal_code,
-          city: extension_for_product.city,
-          county: extension_for_product.county,
-          country: extension_for_product.country,
-
-          free_pick_up: extension_for_product.free_pick_up,
-          send_via_email: extension_for_product.send_via_email,
-          free_pick_up_after_payment: extension_for_product.free_pick_up_after_payment
-          #currency: store.currency,
-          #abbreviation: store.country,
-          #dispatch_time_max: extension_for_product.dispatch_time_max,
-          ##picture_details
-          #listing_duration: extension_for_product.listing_duration,
-          #listing_type: extension_for_product.listing_type,
-          #payment_methods: extension_for_product.payment_methods,
-          #quantity: self.quantity,
-          #refund: extension_for_product.refund,
-          #returns_accepted_option: extension_for_product.returns_accepted_option,
-          #return_policy_description:  extension_for_product.return_policy_description,
-          #returns_within: extension_for_product.returns_within,
-          #shipping_type: extension_for_product.shipping_type,
-          #shipping: shipping,
-          #paypal_email_address: extension.paypal_email_address,
-          #picture_urls: self.image_products.map{|x| x.url(:medium)},
-          #condition_id: extension_for_product.condition_id.to_i,
-
-
+          #auction_title: self.name,
         }
+
+        extension_for_product.detail.each do |k,v|
+          hash.merge(k => v)
+        end
+
+        return hash
 
       end
     end

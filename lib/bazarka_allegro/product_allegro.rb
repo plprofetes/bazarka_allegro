@@ -175,29 +175,24 @@ module BazarkaAllegro
 
     def new_item(options ={})
 
-      Rails.logger.info "-----------OPTIONS-----------"
-      Rails.logger.info "-----------#{options}-----------"
-      Rails.logger.info "-----------OPTIONS-----------"
       new_item_hash = {item: []}
       EXTENSIONS[:allegro]['extension_for_products_details'].each do |i|
 
-        #Rails.logger.info "!!!!!!!!!!!!!!!!!!!"
-        #Rails.logger.info "!!!!!!! #{i.inspect}   !!!!!!!!!!!!"
         my_item = get_skeleton
-        my_item[:fid] = i[1]['id']
-        type = i[1]['type']
-        if i[1]['html_type'] == 'checkbox'
-          my_item[:fvalue_int] = i[1]['html_value'] unless options[i[0].to_sym] == '0'
+        my_item[:fid] = i[0].gsub('attribute_','')
+        type = i[1]['allegro_type']
+        if type == 'checkbox'
+          my_item[:fvalue_int] = options[i[0]] unless options[i[0]] == '0'
         elsif type == 'string'
-          my_item[:fvalue_string] = options[i[0].to_sym] unless options[i[0].to_sym].nil?
+          my_item[:fvalue_string] = options[i[0]] unless options[i[0]].nil?
         elsif type == 'integer'
-          my_item[:fvalue_int] = options[i[0].to_sym] unless options[i[0].to_sym].nil?
+          my_item[:fvalue_int] = options[i[0]] unless options[i[0]].nil?
         elsif type == 'float'
-          my_item[:fvalue_float] = options[i[0].to_sym] unless options[i[0].to_sym].nil?
+          my_item[:fvalue_float] = options[i[0]] unless options[i[0]].nil?
         elsif type == 'date'
-          my_item[:fvalue_date] = options[i[0].to_sym] unless options[i[0].to_sym].nil?
+          my_item[:fvalue_date] = options[i[0]] unless options[i[0]].nil?
         elsif type == 'datetime'
-          my_item[:fvalue_datetime] = options[i[0].to_sym] unless options[i[0].to_sym].nil?
+          my_item[:fvalue_datetime] = options[i[0]] unless options[i[0]].nil?
         end
         new_item_hash[:item] << my_item
       end
