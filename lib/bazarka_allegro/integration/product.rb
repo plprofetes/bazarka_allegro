@@ -71,7 +71,7 @@ module BazarkaAllegro
         extension_for_product = self.extension_for_products.where(key: :allegro).first
         #extension = store.extensions.where(key: :allegro).first
 
-        hash = {}
+        hash = { 'attribute_1' => self.name }
 
         extension_for_product.details.each do |k,v|
           hash.merge!(k => v)
