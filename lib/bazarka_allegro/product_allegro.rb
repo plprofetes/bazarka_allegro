@@ -19,9 +19,7 @@ module BazarkaAllegro
 
       rescue Exception => e
         Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
-        @errors = e.errors.map do |error|
-          error.long_message
-        end
+        @errors = e
         Rails.logger.info @errors
         nil
       end
@@ -39,9 +37,7 @@ module BazarkaAllegro
       rescue Exception => e
         Rails.logger.info "----- Error verify_add_item -----"
         Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
-        @errors = e.errors.map do |error|
-          error.long_message
-        end
+        @errors = e
         Rails.logger.info @errors
         nil
       end
