@@ -71,16 +71,7 @@ module BazarkaAllegro
         extension_for_product = self.extension_for_products.where(key: :allegro).first
         #extension = store.extensions.where(key: :allegro).first
 
-        #shipping = []
-        #EXTENSIONS[:allegro]['extension_for_products_details']['shipping']['length'].to_i.times do |i|
-        #  if  extension_for_product.send("shipping_service_#{i}").present? and extension_for_product.send("shipping_service_cost_#{i}").present?
-        #    shipping << {shipping_service: extension_for_product.send("shipping_service_#{i}"), shipping_service_cost: extension_for_product.send("shipping_service_cost_#{i}"), shipping_service_code: extension_for_product.send("shipping_service_code_#{i}"), shipping_region_code: extension_for_product.send("shipping_region_code_#{i}")}
-        #  end
-        #end
-
-        hash = {
-          #auction_title: self.name,
-        }
+        hash = {}
 
         extension_for_product.details.each do |k,v|
           hash.merge!(k => v)

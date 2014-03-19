@@ -34,6 +34,7 @@ module BazarkaAllegro
         return  response
 
       rescue Exception => e
+        Rails.logger.info "----- Error verify_add_item -----"
         Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
         @errors = "#{e}\n#{e.backtrace.join("\n")}"
         nil
