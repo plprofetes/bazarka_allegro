@@ -1,7 +1,7 @@
 module BazarkaAllegro
   module Model
     class Item
-      attr_accessor :
+      #attr_accessor :
     end
   end
 end
