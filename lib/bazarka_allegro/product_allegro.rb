@@ -188,7 +188,7 @@ module BazarkaAllegro
           my_item[:fvalue_int] = options[i[0]].split("|").inject{|sum, x| sum.to_i+x.to_i} unless options[i[0]].blank?
         elsif type == 'string'
           my_item[:fvalue_string] = options[i[0]] unless options[i[0]].blank?
-        elsif type == 'integer'
+        elsif type == 'integer' or type == "radiobutton"
           my_item[:fvalue_int] = options[i[0]] unless options[i[0]].blank?
         elsif type == 'float'
           my_item[:fvalue_float] = options[i[0]] unless options[i[0]].blank?
