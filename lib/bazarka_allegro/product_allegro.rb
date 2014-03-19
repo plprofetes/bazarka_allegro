@@ -185,7 +185,7 @@ module BazarkaAllegro
         my_item[:fid] = i[0].gsub('attribute_','')
         type = i[1]['allegro_type']
         if type == 'checkbox'
-          my_item[:fvalue_int] = options[i[0]] unless options[i[0]].blank?
+          my_item[:fvalue_int] = options[i[0]].split("|").inject{|sum, x| sum.to_i+x.to_i} unless options[i[0]].blank?
         elsif type == 'string'
           my_item[:fvalue_string] = options[i[0]] unless options[i[0]].blank?
         elsif type == 'integer'
