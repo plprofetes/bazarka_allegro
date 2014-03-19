@@ -72,9 +72,9 @@ module BazarkaAllegro
       @client = Savon.client do
         ssl_verify_mode :none
         wsdl END_POINT
-        #log  true
-        #log_level  :debug
-        #pretty_print_xml true
+        log  true
+        log_level  :debug
+        pretty_print_xml true
         strip_namespaces true
       end
     end
