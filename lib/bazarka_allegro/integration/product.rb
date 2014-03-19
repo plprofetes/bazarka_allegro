@@ -82,8 +82,8 @@ module BazarkaAllegro
           #auction_title: self.name,
         }
 
-        extension_for_product.detail.each do |k,v|
-          hash.merge(k => v)
+        extension_for_product.details.each do |k,v|
+          hash.merge!(k => v)
         end
 
         return hash
