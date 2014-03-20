@@ -183,17 +183,18 @@ module BazarkaAllegro
         my_item = get_skeleton
         my_item[:fid] = i[0].gsub('attribute_','')
         type = i[1]['allegro_type']
+
         if type == 'checkbox'
           my_item[:fvalue_int] = options[i[0]].split("|").inject{|sum, x| sum.to_i+x.to_i} unless options[i[0]].blank?
-        elsif type == 'string'
+        elsif type == 'string' or type == 'text (textarea)'
           my_item[:fvalue_string] = options[i[0]] unless options[i[0]].blank?
-        elsif type == 'integer' or type == "radiobutton"
+        elsif type == 'integer' or type == "radiobutton" or type == 'combobox'
           my_item[:fvalue_int] = options[i[0]] unless options[i[0]].blank?
         elsif type == 'float'
           my_item[:fvalue_float] = options[i[0]].to_f unless options[i[0]].blank?
         elsif type == 'date'
           my_item[:fvalue_date] = options[i[0]] unless options[i[0]].blank?
-        elsif type == 'datetime'
+        elsif type == 'datetime (Unix time)'
           my_item[:fvalue_datetime] = options[i[0]] unless options[i[0]].blank?
         end
         new_item_hash[:item] << my_item
