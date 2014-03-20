@@ -76,7 +76,7 @@ module BazarkaAllegro
             extension_for_product.details.each do |k,v|
           hash.merge!(k => v)
         end
-       hash.merge( 'attribute_1' => self.name )
+       hash.merge!( 'attribute_1' => self.name )
 
         return hash
 
