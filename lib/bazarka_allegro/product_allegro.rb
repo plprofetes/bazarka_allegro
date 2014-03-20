@@ -191,7 +191,7 @@ module BazarkaAllegro
         elsif type == 'integer' or type == "radiobutton"
           my_item[:fvalue_int] = options[i[0]] unless options[i[0]].blank?
         elsif type == 'float'
-          my_item[:fvalue_float] = options[i[0]] unless options[i[0]].blank?
+          my_item[:fvalue_float] = options[i[0]].to_f unless options[i[0]].blank?
         elsif type == 'date'
           my_item[:fvalue_date] = options[i[0]] unless options[i[0]].blank?
         elsif type == 'datetime'
