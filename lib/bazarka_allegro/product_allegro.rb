@@ -177,9 +177,6 @@ module BazarkaAllegro
     end
 
     def new_item(options ={})
-      Rails.logger.info "-----------)))))))))))"
-      Rails.logger.info options
-      Rails.logger.info "-----------)))))))))))"
       new_item_hash = {item: []}
       EXTENSIONS[:allegro]['extension_for_products_details'].each do |i|
 
