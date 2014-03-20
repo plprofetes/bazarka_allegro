@@ -208,7 +208,7 @@ module BazarkaAllegro
           fid: 0,
           fvalue_string: '',
           fvalue_int: 0 ,
-          fvalue_float: 0,
+          fvalue_float: 0.0,
           #fvalue_image: 0,
           fvalue_datetime: 0,
           fvalue_date: '',
