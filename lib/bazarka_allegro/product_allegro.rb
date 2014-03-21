@@ -216,7 +216,7 @@ module BazarkaAllegro
           fvalue_string: '',
           fvalue_int: 0 ,
           fvalue_float: 0.0,
-          fvalue_image: 0,
+          fvalue_image: Base64.encode64(0),
           fvalue_datetime: 0,
           fvalue_date: '',
           fvalue_range_int: {
