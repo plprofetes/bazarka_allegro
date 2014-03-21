@@ -83,7 +83,7 @@ module BazarkaAllegro
         # obrazki w allegro mają nr od 16 do 23 więc robimy pętle
         16.upto(23) do |x|
           if hash["attribute_#{x}"].to_i == 1 and images[x-16].present?
-            hash["attribute_#{x}"] = Base64.encode64(open(imagex[x-16].image.url()).read)
+            hash["attribute_#{x}"] = Base64.encode64(open(images[x-16].image.url()).read)
           end
         end
 
