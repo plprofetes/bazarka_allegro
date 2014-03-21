@@ -200,8 +200,9 @@ module BazarkaAllegro
             else
               my_item[:fvalue_datetime] = DateTime.strptime(options[i[0]], '%d/%m/%Y %H:%M:%S').to_i
             end
+
           elsif type == 'image (base64Binary)'
-            my_item[:fvalue_datetime] = options[i[0]] unless options[i[0]].blank?
+            my_item[:fvalue_image] = options[i[0]] unless options[i[0]].blank?
           end
           new_item_hash[:item] << my_item
         end
