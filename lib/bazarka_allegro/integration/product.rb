@@ -84,6 +84,8 @@ module BazarkaAllegro
         16.upto(23) do |x|
           if hash["attribute_#{x}"].to_i == 1 and images[x-16].present?
             hash["attribute_#{x}"] = Base64.encode64(open(images[x-16].image.url()).read)
+          else
+            hash["attribute_#{x}"] = nil
           end
         end
 
