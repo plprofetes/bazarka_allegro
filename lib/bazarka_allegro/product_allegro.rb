@@ -195,6 +195,12 @@ module BazarkaAllegro
           elsif type == 'date'
             my_item[:fvalue_date] = options[i[0]] unless options[i[0]].blank?
           elsif type == 'datetime (Unix time)'
+            if options[i[0]].blank?
+              my_item[:fvalue_datetime] = DateTime.now.to_i
+            else
+              my_item[:fvalue_datetime] = DateTime.strptime(options[i[0]], '%d/%m/%Y %H:%M:%S').to_i
+            end
+          elsif type == 'image (base64Binary)'
             my_item[:fvalue_datetime] = options[i[0]] unless options[i[0]].blank?
           end
           new_item_hash[:item] << my_item
@@ -210,7 +216,7 @@ module BazarkaAllegro
           fvalue_string: '',
           fvalue_int: 0 ,
           fvalue_float: 0.0,
-          #fvalue_image: 0,
+          fvalue_image: 0,
           fvalue_datetime: 0,
           fvalue_date: '',
           fvalue_range_int: {

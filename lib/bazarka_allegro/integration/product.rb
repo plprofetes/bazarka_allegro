@@ -76,7 +76,16 @@ module BazarkaAllegro
             extension_for_product.details.each do |k,v|
           hash.merge!(k => v)
         end
-       hash.merge!( 'attribute_1' => self.name, 'attribute_24' => self.description )
+        hash.merge!( 'attribute_1' => self.name, 'attribute_24' => self.description )
+
+        # Pobieramy 8 obrazków z nazu
+        images = self.image_products.order(:sort).limit(8)
+        # obrazki w allegro mają nr od 16 do 23 więc robimy pętle
+        16.upto(23) do |x|
+          if hash["attribute_#{x}"] == 1 and images[x-16].present?
+            hash["attribute_#{x}"] = Base64.encode64(open(imagex[x-16].image.url()).read)
+          end
+        end
 
         return hash
 
