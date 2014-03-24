@@ -30,6 +30,34 @@ module BazarkaAllegro
           1 => "Kompletow",
           2 => "Par"
       }
+
+      # To co dostajemy w odpowiedzi od allegro
+      FORM_TYPE = {
+        1 => 'string',
+        2 => 'integer',
+        3 => 'float',
+        4 => 'combobox',
+        5 => 'radiobutton',
+        6 => 'checkbox',
+        7 => 'image (base64Binary)',
+        8 => 'text (textarea)',
+        9 => 'datetime (Unix time)',
+        13 => 'date'
+      }
+
+      BAZARKA_FORM_TYPE = {
+          1 => 'input',
+          2 => 'input',
+          3 => 'input',
+          4 => 'select',
+          5 => 'select',
+          6 => 'input',
+          7 => 'image',
+          8 => 'textarea',
+          9 => 'datetime',
+          13 => 'date'
+      }
+
     end
   end
 end
