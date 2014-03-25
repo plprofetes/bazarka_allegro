@@ -15,6 +15,9 @@ module BazarkaAllegro
       begin
         item =  new_item(options)
         response = @allegro.do_new_auction_ext(item)
+        logger.info "+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_"
+        logger.info response.inspect
+        logger.info "+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_"
         return  response
 
       rescue Exception => e
@@ -35,7 +38,6 @@ module BazarkaAllegro
         return  response
 
       rescue Exception => e
-        Rails.logger.info "----- Error verify_add_item -----"
         Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
         @errors = e
         Rails.logger.info @errors
