@@ -47,7 +47,6 @@ module BazarkaAllegro
       def send_to_allegro
         product = ProductAllegro.new(self.store)
         product.add_item(options)
-        product
       end
 
       def verify_in_allegro

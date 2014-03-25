@@ -15,10 +15,7 @@ module BazarkaAllegro
       begin
         item =  new_item(options)
         response = @allegro.do_new_auction_ext(item)
-        Rails.logger.info "+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_"
-        Rails.logger.info response.inspect
-        Rails.logger.info "+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_"
-        return  response
+        return  response.to_hash[:do_new_auction_ext_response][:item_id]
 
       rescue Exception => e
         Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
