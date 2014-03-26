@@ -72,10 +72,13 @@ module BazarkaAllegro
 
 
         hash ={}
-            extension_for_product.details.each do |k,v|
+        extension_for_product.details.each do |k,v|
           hash.merge!(k => v)
         end
-        hash.merge!( 'attribute_1' => self.name, 'attribute_24' => self.description )
+        hash.merge!( 'attribute_1' => self.name, 'attribute_24' => self.description, 'attribute_5' => self.quantity )
+        # usuniecie ceny wywoławczej oraz ceny minimalnej
+        hash.delete('attribute_6')
+        hash.delete('attribute_7')
 
         # Pobieramy 8 obrazków z nazu
         images = self.image_products.order(:sort).limit(8)
