@@ -80,7 +80,7 @@ module BazarkaAllegro
 
         # jeśli śledzimy ilość w bazarce to bierzemy liczbę z produktu
         # jeśli nie śledzimy to bierzemy 999
-        if self.inventory == 'truck_this_products'
+        if self.inventory == 'tracks_this_products'
           hash.merge!('attribute_5' => self.quantity)
         else
           hash.merge!('attribute_5' => 999)
