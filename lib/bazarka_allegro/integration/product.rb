@@ -81,9 +81,9 @@ module BazarkaAllegro
         # jeśli śledzimy ilość w bazarce to bierzemy liczbę z produktu
         # jeśli nie śledzimy to bierzemy 999
         if self.inventory == 'truck_this_products'
-          hash.merge('attribute_5' => self.quantity)
+          hash.merge!('attribute_5' => self.quantity)
         else
-          hash.merge('attribute_5' => 999)
+          hash.merge!('attribute_5' => 999)
         end
         # usuniecie ceny wywoławczej oraz ceny minimalnej
         hash.delete('attribute_6')
