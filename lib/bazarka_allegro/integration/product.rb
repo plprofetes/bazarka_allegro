@@ -14,7 +14,7 @@ module BazarkaAllegro
         Rails.logger.info "-----------------"
         Rails.logger.info "Update Allegro"
         Rails.logger.info "-----------------"
-        product = ProductEbay.new(self.store)
+        product = ProductAllegro.new(self.store)
         product.update_item_quantity(self)
 
       end

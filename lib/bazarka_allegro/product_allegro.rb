@@ -142,9 +142,9 @@ module BazarkaAllegro
     # aktualizacja ilości, jeśli ilość mniejsza od zera ustawiamy produkt niedostępny
     def update_item_quantity(product)
       if product.quantity.to_i > 0
-        response = @allegro.do_change_quantity_item(product.extension_for_products.where(key: 'allegro').first.ebay_id, product.quantity.to_i)
+        response = @allegro.do_change_quantity_item(product.extension_for_products.where(key: 'allegro').first.allegro_id, product.quantity.to_i)
       else
-        response = @allegro.do_finish_item(product.extension_for_products.where(key: 'allegro').first.ebay_id)
+        response = @allegro.do_finish_item(product.extension_for_products.where(key: 'allegro').first.allegro_id)
       end
       #Rails.logger.info response.inspect
       response
@@ -164,7 +164,7 @@ module BazarkaAllegro
         hash.merge!(shipped: true)
       end
 
-      response = @ebay.complete_sale(hash)
+      response = @allegro.complete_sale(hash)
       #Rails.logger.info response.inspect
       response
     end
