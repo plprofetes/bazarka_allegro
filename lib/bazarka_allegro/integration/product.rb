@@ -75,7 +75,8 @@ module BazarkaAllegro
         extension_for_product.details.each do |k,v|
           hash.merge!(k => v)
         end
-        hash.merge!( 'attribute_1' => self.name, 'attribute_24' => self.description, 'attribute_5' => self.quantity )
+        hash.merge!( 'attribute_1' => self.name, 'attribute_24' => self.description,
+                     'attribute_5' => self.quantity, 'attribute_8' => self.price )
         # usuniecie ceny wywoławczej oraz ceny minimalnej
         hash.delete('attribute_6')
         hash.delete('attribute_7')
