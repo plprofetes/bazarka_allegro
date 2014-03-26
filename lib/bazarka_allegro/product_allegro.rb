@@ -145,6 +145,7 @@ module BazarkaAllegro
         response = @allegro.do_change_quantity_item(product.extension_for_products.where(key: 'allegro').first.allegro_id, product.quantity.to_i)
       else
         response = @allegro.do_finish_item(product.extension_for_products.where(key: 'allegro').first.allegro_id)
+        product.extension_for_products.where(key: 'allegro').first.destroy
       end
       #Rails.logger.info response.inspect
       response
