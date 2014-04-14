@@ -55,7 +55,7 @@ module BazarkaAllegro
         product
       end
 
-      def delete_from_ebay
+      def delete_from_allegro
 
       end
 
