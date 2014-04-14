@@ -8,7 +8,7 @@ module BazarkaAllegro
       end
 
       def do_get_post_buy_forms_data_for_sellers(transactions_ids = [])
-        message = {session_id: @client.session_handle, transactions_ids_array: transactions_ids}
+        message = {session_id: @client.session_handle, transactions_ids_array: { item: transactions_ids} }
         @client.call(:do_get_post_buy_forms_data_for_sellers, message: message)
       end
 
