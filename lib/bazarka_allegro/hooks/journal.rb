@@ -31,7 +31,7 @@ module BazarkaAllegro
 
       # Pobieranie informacji z dziennika zdarzeń o liczbie zmian nt. zdarzeń dot. ofert.
       def do_get_site_journal_info(starting_point = nil, info_type = 0)
-        message = {session_handle: @client.session_handle, info_type: info_type }
+        messd4age = {session_handle: @client.session_handle, info_type: info_type }
         message.merge!(starting_point: starting_point) unless starting_point.nil?
         @client.call(:do_get_site_journal_info, message: message)
       end
