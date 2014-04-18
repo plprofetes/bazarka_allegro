@@ -142,7 +142,12 @@ module BazarkaAllegro
     # aktualizacja ilości, jeśli ilość mniejsza od zera ustawiamy produkt niedostępny
     def update_item_quantity(product)
       if product.quantity.to_i > 0
+        begin
         response = @allegro.do_change_quantity_item(product.extension_for_products.where(key: 'allegro').first.allegro_id, product.quantity.to_i)
+        rescue Exception => e
+          Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
+        end
+
       else
         response = @allegro.do_finish_item(product.extension_for_products.where(key: 'allegro').first.allegro_id)
         product.extension_for_products.where(key: 'allegro').first.destroy
