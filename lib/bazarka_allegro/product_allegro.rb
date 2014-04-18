@@ -145,8 +145,13 @@ module BazarkaAllegro
         begin
         response = @allegro.do_change_quantity_item(product.extension_for_products.where(key: 'allegro').first.allegro_id, product.quantity.to_i)
         rescue Savon::SOAPFault => e
-          Rails.logger.info e.inspect
-          Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
+          Rails.logger.info "#{e}"
+          if e.message =~ /ERR_YOU_CANT_CHANGE_ITEM/i
+            product.extension_for_products.where(key: 'allegro').first.destroy
+          else
+            raise "#{e}"
+          end
+
         end
 
       else
