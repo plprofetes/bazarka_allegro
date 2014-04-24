@@ -1,7 +1,9 @@
 module BazarkaAllegro
   module Hooks
   class Client
-    END_POINT = 'https://webapi.allegro.pl/service.php?wsdl'
+    #END_POINT = 'https://webapi.allegro.pl/service.php?wsdl'
+    END_POINT = 'https://webapi.allegro.pl.webapisandbox.pl/service.php'
+
 
     attr_accessor :user_login, :webapi_key, :local_version, :country_code
     attr_reader :client, :password, :session_handle
