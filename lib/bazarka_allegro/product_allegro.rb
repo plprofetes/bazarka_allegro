@@ -143,9 +143,8 @@ module BazarkaAllegro
     def update_item_quantity(product)
       if product.quantity.to_i > 0
         begin
-        Rails.logger.info "----------------"
-        Rails.logger.info product.quantity.to_i
-        Rails.logger.info "----------------"
+
+        allegro_product = @allegro.do_get_it
         response = @allegro.do_change_quantity_item(product.extension_for_products.where(key: 'allegro').first.allegro_id, product.quantity.to_i)
         rescue Savon::SOAPFault => e
           Rails.logger.info "#{e}"

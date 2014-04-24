@@ -76,6 +76,21 @@ module BazarkaAllegro
         message = {session_handle: client.session_handle, finish_item_id: item_id}
         client.call(:do_finish_item, message: message)
       end
+
+
+      # pobiera informac
+      def do_get_items_info(items_id_array, get_desc = 1, get_image_url = 1, get_attribs = 1, get_postage_options = 1, get_company_info = 0)
+        message = {
+            items_id_array: { item: items_id_array},
+            get_desc: get_desc,
+            get_image_url: get_image_url,
+            get_attribs: get_attribs,
+            get_postage_options: get_postage_options,
+            get_company_info: get_company_info
+        }
+
+        client.call(:do_get_items_info, message)
+      end
     end
   end
 end
