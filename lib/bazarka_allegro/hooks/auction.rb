@@ -81,6 +81,7 @@ module BazarkaAllegro
       # pobiera informac
       def do_get_items_info(items_id_array, get_desc = 1, get_image_url = 1, get_attribs = 1, get_postage_options = 1, get_company_info = 0)
         message = {
+            session_handle: client.session_handle,
             items_id_array: { item: items_id_array},
             get_desc: get_desc,
             get_image_url: get_image_url,
@@ -89,7 +90,7 @@ module BazarkaAllegro
             get_company_info: get_company_info
         }
 
-        client.call(:do_get_items_info, message)
+        client.call(:do_get_items_info, message: message)
       end
     end
   end
