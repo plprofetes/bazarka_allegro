@@ -146,6 +146,11 @@ module BazarkaAllegro
         allegro_id = product.extension_for_products.where(key: 'allegro').first.allegro_id
         allegro_product = @allegro.do_get_items_info([allegro_id])
 
+        Rails.logger.info "---------"
+        Rails.logger.info allegro_id
+        Rails.logger.info "*********"
+        Rails.logger.info  "#{allegro_product.inspect}"
+        Rails.logger.info "---------"
         allegro_product_info = allegro_product[:do_get_items_info_response][ :array_item_list_info][:item][:item_info]
         quantity = product.quantity.to_i + (allegro_product_info[:it_starting_quantity].to_i - allegro_product_info[:it_quantity].to_i)
         if quantity != allegro_product_info[:it_starting_quantity].to_i
@@ -160,6 +165,7 @@ module BazarkaAllegro
           end
         rescue Exception => e
           Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
+          raise "#{e}"
         end
 
       else
