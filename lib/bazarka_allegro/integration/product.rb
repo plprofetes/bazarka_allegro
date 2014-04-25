@@ -14,35 +14,39 @@ module BazarkaAllegro
         Rails.logger.info "-----------------"
         Rails.logger.info "Update Allegro"
         Rails.logger.info "-----------------"
+        extension_for_product = self.extension_for_products.where(key: 'allegro').first
+        if self.quantity.to_i <  extension_for_product.allegro_quantity.to_i
+          extension_for_product.update(allegro_quantity: self.quantity)
+        end
         product = ProductAllegro.new(self.store)
         product.update_item_quantity(self)
 
       end
 
-      def extension_update_state_allegro(state, order_line)
-        product = ProductEbay.new(self.store)
-        product.update_state(self, state, order_line)
-      end
+      # def extension_update_state_allegro(state, order_line)
+      #   product = ProductEbay.new(self.store)
+      #   product.update_state(self, state, order_line)
+      # end
 
-      def update_from_allegro(event_type, transaction_id=nil)
-        product = ProductEbay.new(self.store)
-        if event_type == "ItemSold"
-          product.item_sold(self)
-        elsif  event_type == "ItemUnsold"
-          product.item_unsold(self)
-        elsif  event_type == "ItemWon"
-          product.item_sold(self)
-        elsif  event_type == "EndOfAuction"
-          product.item_unsold(self)
-        # klient zaplacil i idzie potwierdzenie
-        elsif  event_type == "AuctionCheckoutComplete"
-          product.item_auction_checkout_complete(self, transaction_id)
-        # klient kupil ale jeszcze nie zaplail
-        elsif  event_type == "FixedPriceTransaction"
-          product.item_auction_complete(self, transaction_id)
-
-        end
-      end
+      # def update_from_allegro(event_type, transaction_id=nil)
+      #   product = ProductEbay.new(self.store)
+      #   if event_type == "ItemSold"
+      #     product.item_sold(self)
+      #   elsif  event_type == "ItemUnsold"
+      #     product.item_unsold(self)
+      #   elsif  event_type == "ItemWon"
+      #     product.item_sold(self)
+      #   elsif  event_type == "EndOfAuction"
+      #     product.item_unsold(self)
+      #   # klient zaplacil i idzie potwierdzenie
+      #   elsif  event_type == "AuctionCheckoutComplete"
+      #     product.item_auction_checkout_complete(self, transaction_id)
+      #   # klient kupil ale jeszcze nie zaplail
+      #   elsif  event_type == "FixedPriceTransaction"
+      #     product.item_auction_complete(self, transaction_id)
+      #
+      #   end
+      # end
 
       def send_to_allegro
         product = ProductAllegro.new(self.store)
@@ -82,8 +86,10 @@ module BazarkaAllegro
         # jeśli nie śledzimy to bierzemy 999
         if self.inventory == 'tracks_this_products'
           hash.merge!('attribute_5' => self.quantity)
+          extension_for_product.update(:allegro_quantity, self.quantity)
         else
           hash.merge!('attribute_5' => 999)
+          extension_for_product.update(:allegro_quantity, 999)
         end
         # usuniecie ceny wywoławczej oraz ceny minimalnej
         hash.delete('attribute_6')

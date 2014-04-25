@@ -141,15 +141,22 @@ module BazarkaAllegro
 
     # aktualizacja ilości, jeśli ilość mniejsza od zera ustawiamy produkt niedostępny
     def update_item_quantity(product)
-      if product.quantity.to_i > 0
+      extension_for_product = product.extension_for_products.where(key: 'allegro').first
+      if extension_for_product.allegro_quantity.to_i > 0
         begin
-        allegro_id = product.extension_for_products.where(key: 'allegro').first.allegro_id
-        allegro_product = @allegro.do_get_items_info([allegro_id]).to_hash
-        allegro_product_info = allegro_product[:do_get_items_info_response][ :array_item_list_info][:item][:item_info]
-        quantity = product.quantity.to_i + (allegro_product_info[:it_starting_quantity].to_i - allegro_product_info[:it_quantity].to_i)
-        if quantity != allegro_product_info[:it_starting_quantity].to_i
-          response = @allegro.do_change_quantity_item(allegro_id, quantity)
-        end
+          # pobieramy id aukcji allegro, pobieramy dane aukcji, ile jest produktów i ile było na początku
+          # bierzemy tylko dane nam potrzebne z aukci czyli quantity
+          # sprawdzamy czy liczba produktów w sklepie + liczba produktów sprzedanych na allegro równa sie liczbie
+          # produktów wystawionych na allegro, jeśli nie to aktualizujemy liczbę wystawionych na allegro która
+          # równa się liczba w systemie + liczba sprzedanych
+
+          allegro_id = extension_for_product.allegro_id
+          allegro_product = @allegro.do_get_items_info([allegro_id]).to_hash
+          allegro_product_info = allegro_product[:do_get_items_info_response][ :array_item_list_info][:item][:item_info]
+          quantity = extension_for_product.allegro_quantity.to_i + (allegro_product_info[:it_starting_quantity].to_i - allegro_product_info[:it_quantity].to_i)
+          if quantity != allegro_product_info[:it_starting_quantity].to_i
+            response = @allegro.do_change_quantity_item(allegro_id, quantity)
+          end
         rescue Savon::SOAPFault => e
           Rails.logger.info "#{e}"
           if e.message =~ /ERR_YOU_CANT_CHANGE_ITEM/i

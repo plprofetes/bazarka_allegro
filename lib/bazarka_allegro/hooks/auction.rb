@@ -57,7 +57,7 @@ module BazarkaAllegro
         client.call(:do_new_auction_ext, message: message )
       end
 
-     # zmiana liczny przedmiotow dostepnych w aukcji
+     # zmiana liczny przedmiotow dostepnych na początku aukcji
       def do_change_quantity_item(item_id, quantity)
         message = {session_handle: client.session_handle, item_id: item_id, new_item_quantity: quantity}
         client.call(:do_change_quantity_item, message: message)
