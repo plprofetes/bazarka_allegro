@@ -158,7 +158,8 @@ module BazarkaAllegro
           else
             raise "#{e}"
           end
-
+        rescue Exception => e
+          Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
         end
 
       else
