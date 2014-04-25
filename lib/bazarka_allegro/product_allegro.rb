@@ -143,9 +143,14 @@ module BazarkaAllegro
     def update_item_quantity(product)
       if product.quantity.to_i > 0
         begin
+        allegro_id = product.extension_for_products.where(key: 'allegro').first.allegro_id
+        allegro_product = @allegro.do_get_items_info([allegro_id])
 
-        allegro_product = @allegro.do_get_it
-        response = @allegro.do_change_quantity_item(product.extension_for_products.where(key: 'allegro').first.allegro_id, product.quantity.to_i)
+        allegro_product_info = allegro_product[:do_get_items_info_response][ :array_item_list_info][:item][:item_info]
+        quantity = product.quantity.to_i + (allegro_product_info[:it_starting_quantity].to_i - allegro_product_info[:it_quantity].to_i)
+        if quantity != allegro_product_info[:it_starting_quantity].to_i
+          response = @allegro.do_change_quantity_item(allegro_id, quantity)
+        end
         rescue Savon::SOAPFault => e
           Rails.logger.info "#{e}"
           if e.message =~ /ERR_YOU_CANT_CHANGE_ITEM/i
