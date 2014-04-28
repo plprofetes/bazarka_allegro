@@ -86,6 +86,7 @@ module BazarkaAllegro
         # jeśli nie śledzimy to bierzemy 999
         if self.inventory == 'tracks_this_products'
           hash.merge!('attribute_5' => self.quantity)
+
           extension_for_product.update(:allegro_quantity, self.quantity)
         else
           hash.merge!('attribute_5' => 999)
@@ -93,7 +94,9 @@ module BazarkaAllegro
         end
         # usuniecie ceny wywoławczej oraz ceny minimalnej
         hash.delete('attribute_6')
+        hash.delete('attributetype_6')
         hash.delete('attribute_7')
+        hash.delete('attributetype_7')
 
         # Pobieramy 8 obrazków z nazu
         images = self.image_products.order(:sort).limit(8)

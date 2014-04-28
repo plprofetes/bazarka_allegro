@@ -204,31 +204,40 @@ module BazarkaAllegro
 
     def new_item(options ={})
       new_item_hash = {item: []}
-      EXTENSIONS[:allegro]['extension_for_products_details'].each do |i|
-        if options[i[0]].present?
+      #EXTENSIONS[:allegro]['extension_for_products_details'].each do |i|
+      options.each do |option, value|
+        #if options[i[0]].present?
+        if option =~ /^attribute_(\d+)$/
           my_item = get_skeleton
-          my_item[:fid] = i[0].gsub('attribute_','')
-          type = i[1]['allegro_type']
+          #my_item[:fid] = i[0].gsub('attribute_','')
+          my_item[:fid] = option.gsub('attribute_','')
+          #type = i[1]['allegro_type']
+          type = options[option.gsub('attribute_', 'attributetype_')]
 
-          if type == 'checkbox'
-            my_item[:fvalue_int] = options[i[0]].split("|").inject{|sum, x| sum.to_i+x.to_i} unless options[i[0]].blank?
-          elsif type == 'string' or type == 'text (textarea)'
-            my_item[:fvalue_string] = options[i[0]] unless options[i[0]].blank?
-          elsif type == 'integer' or type == "radiobutton" or type == 'combobox'
-            my_item[:fvalue_int] = options[i[0]] unless options[i[0]].blank?
-          elsif type == 'float'
-            my_item[:fvalue_float] = options[i[0]].to_f unless options[i[0]].blank?
-          elsif type == 'date'
-            my_item[:fvalue_date] = options[i[0]] unless options[i[0]].blank?
-          elsif type == 'datetime (Unix time)'
-            if options[i[0]].blank?
+          if type == 'checkbox' # 6
+            # my_item[:fvalue_int] = options[i[0]].split("|").inject{|sum, x| sum.to_i+x.to_i} unless options[i[0]].blank?
+            my_item[:fvalue_int] = value.split("|").inject{|sum, x| sum.to_i+x.to_i} unless value.blank?
+          elsif type == 'string' or type == 'text (textarea)'    # 1, 8
+            #my_item[:fvalue_string] = options[i[0]] unless options[i[0]].blank?
+            my_item[:fvalue_string] = value unless value.blank?
+          elsif type == 'integer' or type == "radiobutton" or type == 'combobox' # 2, 5, 6
+            # my_item[:fvalue_int] = options[i[0]] unless options[i[0]].blank?
+            my_item[:fvalue_int] = value unless value.blank?
+          elsif type == 'float' # 3
+            # my_item[:fvalue_float] = options[i[0]].to_f unless options[i[0]].blank?
+            my_item[:fvalue_float] = value.to_f unless value.blank?
+          elsif type == 'date' # 13
+            # my_item[:fvalue_date] = options[i[0]] unless options[i[0]].blank?
+            my_item[:fvalue_date] = value unless value.blank?
+          elsif type == 'datetime (Unix time)' # 9
+            if value.blank?
               my_item[:fvalue_datetime] = DateTime.now.to_i
             else
-              my_item[:fvalue_datetime] = DateTime.strptime(options[i[0]], '%d/%m/%Y %H:%M:%S').to_i
+              my_item[:fvalue_datetime] = DateTime.strptime(value, '%d/%m/%Y %H:%M:%S').to_i
             end
 
-          elsif type == 'image (base64Binary)'
-            my_item[:fvalue_image] = options[i[0]] unless options[i[0]].blank?
+          elsif type == 'image (base64Binary)' # 7
+            my_item[:fvalue_image] = value unless value.blank?
           end
           new_item_hash[:item] << my_item
         end
