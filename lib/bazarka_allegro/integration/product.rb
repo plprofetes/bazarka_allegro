@@ -86,11 +86,10 @@ module BazarkaAllegro
         # jeśli nie śledzimy to bierzemy 999
         if self.inventory == 'tracks_this_products'
           hash.merge!('attribute_5' => self.quantity)
-
-          extension_for_product.update(:allegro_quantity, self.quantity)
+          extension_for_product.update(allegro_quantity: self.quantity)
         else
           hash.merge!('attribute_5' => 999)
-          extension_for_product.update(:allegro_quantity, 999)
+          extension_for_product.update(allegro_quantity: 999)
         end
         # usuniecie ceny wywoławczej oraz ceny minimalnej
         hash.delete('attribute_6')
