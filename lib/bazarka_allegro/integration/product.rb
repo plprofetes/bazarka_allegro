@@ -19,6 +19,10 @@ module BazarkaAllegro
           extension_for_product.update(allegro_quantity: self.quantity)
         end
         product = ProductAllegro.new(self.store)
+
+        Rails.logger.info "-----------------"
+        Rails.logger.info "Update Allegro quantity #{self.quantity}"
+        Rails.logger.info "-----------------"
         product.update_item_quantity(self)
 
       end
