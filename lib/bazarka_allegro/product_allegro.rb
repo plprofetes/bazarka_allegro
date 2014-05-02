@@ -154,7 +154,7 @@ module BazarkaAllegro
           allegro_product = @allegro.do_get_items_info([allegro_id]).to_hash
           allegro_product_info = allegro_product[:do_get_items_info_response][ :array_item_list_info][:item][:item_info]
           quantity = extension_for_product.allegro_quantity.to_i + (allegro_product_info[:it_starting_quantity].to_i - allegro_product_info[:it_quantity].to_i)
-          if quantity != allegro_product_info[:it_starting_quantity].to_i
+          if quantity < allegro_product_info[:it_starting_quantity].to_i
             response = @allegro.do_change_quantity_item(allegro_id, quantity)
           end
         rescue Savon::SOAPFault => e
