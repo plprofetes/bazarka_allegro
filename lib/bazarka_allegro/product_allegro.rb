@@ -158,15 +158,16 @@ module BazarkaAllegro
             response = @allegro.do_change_quantity_item(allegro_id, quantity)
           end
         rescue Savon::SOAPFault => e
-          Rails.logger.info "#{e}"
+          Rails.logger.info "Savon::SOAPFault logger #{e}\n#{e.backtrace.join("\n")}"
           if e.message =~ /ERR_YOU_CANT_CHANGE_ITEM/i
-            product.extension_for_products.where(key: 'allegro').first.destroy
+            # nie możemy usuwać extension dopuki nie pobierzemy wszystkich eventów
+            # product.extension_for_products.where(key: 'allegro').first.destroy
           else
-            raise "#{e}"
+            raise "Savon::SOAPFault - #{e}"
           end
         rescue Exception => e
-          Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
-          raise "#{e}"
+          Rails.logger.info "Exception logger - #{e}\n#{e.backtrace.join("\n")}"
+          raise "Exception - #{e}"
         end
 
       else

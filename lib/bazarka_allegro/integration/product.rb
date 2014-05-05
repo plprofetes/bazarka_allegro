@@ -77,7 +77,7 @@ module BazarkaAllegro
 
       private
       def is_connect_with_allegro?
-        self.store.ebay  and self.extension_for_products.where(key: :allegro).present?
+        self.store.allegro  and self.extension_for_products.where(key: :allegro).present?
       end
 
       def options
