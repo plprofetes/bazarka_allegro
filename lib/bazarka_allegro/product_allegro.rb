@@ -176,7 +176,7 @@ module BazarkaAllegro
           response = @allegro.do_finish_item(product.extension_for_products.where(key: 'allegro').first.allegro_id)
         rescue Savon::SOAPFault => e
           if e.message =~ /ERR_YOU_CANT_CHANGE_ITEM/i
-            product.extension_for_products.where(key: 'allegro').first.destroy
+            # product.extension_for_products.where(key: 'allegro').first.destroy
           else
             Rails.logger.info "Savon::SOAPFault - #{e}\n#{e.backtrace.join("\n")}"
             raise "Savon::SOAPFault - #{e}"
@@ -184,9 +184,9 @@ module BazarkaAllegro
         rescue Exception => e
           Rails.logger.info "Exception logger - #{e}\n#{e.backtrace.join("\n")}"
           raise "Exception - #{e}"
-        ensure
-          product.extension_for_products.where(key: 'allegro').first.destroy
         end
+        product.extension_for_products.where(key: 'allegro').first.destroy
+
       end
       #Rails.logger.info response.inspect
       response
