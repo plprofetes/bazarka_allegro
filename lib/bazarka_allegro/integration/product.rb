@@ -8,6 +8,7 @@ module BazarkaAllegro
         #base.before_save  :update_from_ebay
         #base.after_validation  :send_to_ebay
         #base.before_validation  :send_to_ebay
+        base.after_destroy :delete_from_allegro, if: :is_connect_with_allegro?
       end
 
       def update_allegro
@@ -64,7 +65,13 @@ module BazarkaAllegro
       end
 
       def delete_from_allegro
-
+        product = ProductAllegro.new(self.store)
+        response = product.do_finish_item(self.extension_for_products.where(key: 'allegro').first.allegro_id)
+        Rails.logger.info "------ delete_from_allegro -----------"
+        Rails.logger.info response.to_hash
+        Rails.logger.info "-----------------"
+        self.extension_for_products.where(key: 'allegro').first.destroy
+        product
       end
 
 

@@ -63,81 +63,81 @@ module BazarkaAllegro
 
     end
 
-    # produkt został sprzedany
-    def item_auction_complete
-      begin
-        response = @allegro.do_get_my_sold_items
-        if response.ack == "Failure"
-          response.errors.each do |er|
-            Rails.logger.info er.long_message
-          end
-        else
-
-          response.to_hash[:do_get_my_sold_items_response][:sold_items_list].each do  |transaction|
-
-            if product.store.order_lines.where("properties @> ('key => allegro')").where("properties @> ('transaction_id => #{transaction.transaction_id}')").blank?
-
-              billing_first_name = transaction.buyer.buyer_info.shipping_address.name.to_s.split(" ")
-              billing_last_name = billing_first_name.pop()
-              order  = ::Order.new
-              params = {
-                  billing_address: "#{transaction.buyer.buyer_info.shipping_address.street1}, #{transaction.buyer.buyer_info.shipping_address.street2}",
-                  billing_city: transaction.buyer.buyer_info.shipping_address.city_name,
-                  billing_country: transaction.buyer.buyer_info.shipping_address.country,
-                  billing_first_name: billing_first_name.join(" "),
-                  billing_last_name: billing_last_name,
-                  billing_phone: transaction.buyer.buyer_info.shipping_address.phone,
-                  billing_region: transaction.buyer.buyer_info.shipping_address.county,
-                  billing_zip: transaction.buyer.buyer_info.shipping_address.postal_code,
-                  company: transaction.buyer.buyer_info.shipping_address.company_name,
-                  customer_id: nil,
-                  email: transaction.buyer.email,
-                  shipping_address: "#{transaction.buyer.buyer_info.shipping_address.street1}, #{transaction.buyer.buyer_info.shipping_address.street2}",
-                  shipping_city: transaction.buyer.buyer_info.shipping_address.city_name,
-                  shipping_country: transaction.buyer.buyer_info.shipping_address.country,
-                  shipping_first_name: billing_first_name.join(" "),
-                  shipping_last_name: billing_last_name,
-                  shipping_phone: transaction.buyer.buyer_info.shipping_address.phone,
-                  shipping_region: transaction.buyer.buyer_info.shipping_address.county,
-                  shipping_zip: transaction.buyer.buyer_info.shipping_address.postal_code,
-                  status: 'awaiting_payment',
-                  store_id: product.store_id,
-                  total: transaction.amount_paid.cents
-              }
-
-              order_params = {
-                  product_id: product.id,
-                  quantity: transaction.quantity_purchased,
-                  price: transaction.amount_paid.cents ,
-                  product_name: response.item.title,
-                  key: 'allegro',
-                  transaction_id: transaction.transaction_id,
-                  item_id: response.item.item_id,
-                  shipment_method_price: transaction.shipping_service_selected.shipping_service_cost.cents,
-                  shipment_method_name: transaction.shipping_service_selected.shipping_service
-              }
-              # metoda do tworzenia ordera
-              if order.create_new_order(product.store, params, {}, {}, order_params)
-                return true
-              else
-                Rails.logger.info order.errors
-                return false
-              end
-            end
-          end
-
-        end
-      rescue Exception => e
-        Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
-        @errors = e.errors.map do |error|
-          error.long_message.gsub('<', '&lt;').gsub('>', '&gt;')
-        end
-        Rails.logger.info @errors
-        nil
-      end
-
-
-    end
+    # # produkt został sprzedany
+    # def item_auction_complete
+    #   begin
+    #     response = @allegro.do_get_my_sold_items
+    #     if response.ack == "Failure"
+    #       response.errors.each do |er|
+    #         Rails.logger.info er.long_message
+    #       end
+    #     else
+    #
+    #       response.to_hash[:do_get_my_sold_items_response][:sold_items_list].each do  |transaction|
+    #
+    #         if product.store.order_lines.where("properties @> ('key => allegro')").where("properties @> ('transaction_id => #{transaction.transaction_id}')").blank?
+    #
+    #           billing_first_name = transaction.buyer.buyer_info.shipping_address.name.to_s.split(" ")
+    #           billing_last_name = billing_first_name.pop()
+    #           order  = ::Order.new
+    #           params = {
+    #               billing_address: "#{transaction.buyer.buyer_info.shipping_address.street1}, #{transaction.buyer.buyer_info.shipping_address.street2}",
+    #               billing_city: transaction.buyer.buyer_info.shipping_address.city_name,
+    #               billing_country: transaction.buyer.buyer_info.shipping_address.country,
+    #               billing_first_name: billing_first_name.join(" "),
+    #               billing_last_name: billing_last_name,
+    #               billing_phone: transaction.buyer.buyer_info.shipping_address.phone,
+    #               billing_region: transaction.buyer.buyer_info.shipping_address.county,
+    #               billing_zip: transaction.buyer.buyer_info.shipping_address.postal_code,
+    #               company: transaction.buyer.buyer_info.shipping_address.company_name,
+    #               customer_id: nil,
+    #               email: transaction.buyer.email,
+    #               shipping_address: "#{transaction.buyer.buyer_info.shipping_address.street1}, #{transaction.buyer.buyer_info.shipping_address.street2}",
+    #               shipping_city: transaction.buyer.buyer_info.shipping_address.city_name,
+    #               shipping_country: transaction.buyer.buyer_info.shipping_address.country,
+    #               shipping_first_name: billing_first_name.join(" "),
+    #               shipping_last_name: billing_last_name,
+    #               shipping_phone: transaction.buyer.buyer_info.shipping_address.phone,
+    #               shipping_region: transaction.buyer.buyer_info.shipping_address.county,
+    #               shipping_zip: transaction.buyer.buyer_info.shipping_address.postal_code,
+    #               status: 'awaiting_payment',
+    #               store_id: product.store_id,
+    #               total: transaction.amount_paid.cents
+    #           }
+    #
+    #           order_params = {
+    #               product_id: product.id,
+    #               quantity: transaction.quantity_purchased,
+    #               price: transaction.amount_paid.cents ,
+    #               product_name: response.item.title,
+    #               key: 'allegro',
+    #               transaction_id: transaction.transaction_id,
+    #               item_id: response.item.item_id,
+    #               shipment_method_price: transaction.shipping_service_selected.shipping_service_cost.cents,
+    #               shipment_method_name: transaction.shipping_service_selected.shipping_service
+    #           }
+    #           # metoda do tworzenia ordera
+    #           if order.create_new_order(product.store, params, {}, {}, order_params)
+    #             return true
+    #           else
+    #             Rails.logger.info order.errors
+    #             return false
+    #           end
+    #         end
+    #       end
+    #
+    #     end
+    #   rescue Exception => e
+    #     Rails.logger.info "#{e}\n#{e.backtrace.join("\n")}"
+    #     @errors = e.errors.map do |error|
+    #       error.long_message.gsub('<', '&lt;').gsub('>', '&gt;')
+    #     end
+    #     Rails.logger.info @errors
+    #     nil
+    #   end
+    #
+    #
+    # end
 
     # aktualizacja ilości, jeśli ilość mniejsza od zera ustawiamy produkt niedostępny
     def update_item_quantity(product)
