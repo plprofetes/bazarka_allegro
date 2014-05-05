@@ -8,7 +8,7 @@ module BazarkaAllegro
         #base.before_save  :update_from_ebay
         #base.after_validation  :send_to_ebay
         #base.before_validation  :send_to_ebay
-        base.before_destroy :delete_from_allegro, if: :is_connect_with_allegro?
+        #base.before_destroy :delete_from_allegro, if: :is_connect_with_allegro?
       end
 
       def update_allegro
