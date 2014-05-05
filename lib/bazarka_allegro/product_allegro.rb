@@ -162,8 +162,9 @@ module BazarkaAllegro
           if e.message =~ /ERR_YOU_CANT_CHANGE_ITEM/i
             # nie możemy usuwać extension dopuki nie pobierzemy wszystkich eventów
             # product.extension_for_products.where(key: 'allegro').first.destroy
+            raise "Savon::SOAPFault 1 - #{e}"
           else
-            raise "Savon::SOAPFault - #{e}"
+            raise "Savon::SOAPFault 2 - #{e}"
           end
         rescue Exception => e
           Rails.logger.info "Exception logger - #{e}\n#{e.backtrace.join("\n")}"
