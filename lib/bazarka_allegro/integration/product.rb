@@ -13,7 +13,7 @@ module BazarkaAllegro
 
       def update_allegro
         Rails.logger.info "-----------------Update Allegro-----------------" if Rails.env == "development"
-        extension_for_product = self.extension_for_products.where(key: 'allegro').where(published: true).first
+        extension_for_product = self.extension_for_products.where(key: 'allegro').first
         if self.quantity.to_i <  extension_for_product.allegro_quantity.to_i
           extension_for_product.update(allegro_quantity: self.quantity)
         end
@@ -72,7 +72,7 @@ module BazarkaAllegro
 
       private
       def is_connect_with_allegro?
-        self.store.allegro  and self.extension_for_products.where(key: :allegro).present?
+        self.store.allegro  and self.extension_for_products.where(key: :allegro).where(published: true).present?
       end
 
       def options
