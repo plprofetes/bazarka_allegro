@@ -1,8 +1,11 @@
 module BazarkaAllegro
   module Hooks
   class Client
-    #END_POINT = 'https://webapi.allegro.pl/service.php?wsdl'
-    END_POINT = 'https://webapi.allegro.pl.webapisandbox.pl/service.php?wsdl'
+    if Rails.env == 'production'
+      END_POINT = 'https://webapi.allegro.pl/service.php?wsdl'
+    else
+      END_POINT = 'https://webapi.allegro.pl.webapisandbox.pl/service.php?wsdl'
+    end
 
 
     attr_accessor :user_login, :webapi_key, :local_version, :country_code
