@@ -141,7 +141,7 @@ module BazarkaAllegro
 
     # aktualizacja ilości, jeśli ilość mniejsza od zera ustawiamy produkt niedostępny
     def update_item_quantity(product)
-      extension_for_product = product.extension_for_products.where(key: 'allegro').first
+      extension_for_product = product.extension_for_products.where(key: 'allegro').where(published: true).first
       if extension_for_product.allegro_quantity.to_i > 0
         begin
           # pobieramy id aukcji allegro, pobieramy dane aukcji, ile jest produktów i ile było na początku

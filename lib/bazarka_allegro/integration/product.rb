@@ -12,18 +12,15 @@ module BazarkaAllegro
       end
 
       def update_allegro
-        Rails.logger.info "-----------------"
-        Rails.logger.info "Update Allegro"
-        Rails.logger.info "-----------------"
-        extension_for_product = self.extension_for_products.where(key: 'allegro').first
+        Rails.logger.info "-----------------Update Allegro-----------------" if Rails.env == "development"
+        extension_for_product = self.extension_for_products.where(key: 'allegro').where(published: true).first
         if self.quantity.to_i <  extension_for_product.allegro_quantity.to_i
           extension_for_product.update(allegro_quantity: self.quantity)
         end
         product = ProductAllegro.new(self.store)
 
-        Rails.logger.info "-----------------"
-        Rails.logger.info "Update Allegro quantity #{self.quantity}"
-        Rails.logger.info "-----------------"
+
+        Rails.logger.info "-----------------Update Allegro quantity #{self.quantity}-----------------"  if Rails.env == "development"
         product.update_item_quantity(self)
 
       end
@@ -67,9 +64,7 @@ module BazarkaAllegro
       def delete_from_allegro
         product = ProductAllegro.new(self.store)
         response = product.do_finish_item(self.extension_for_products.where(key: 'allegro').first.allegro_id)
-        Rails.logger.info "------ delete_from_allegro -----------"
-        Rails.logger.info response.to_hash
-        Rails.logger.info "-----------------"
+        Rails.logger.info "------ delete_from_allegro ----------- #{response.to_hash}-----------------" if Rails.env == "development"
         self.extension_for_products.where(key: 'allegro').first.destroy
         product
       end
