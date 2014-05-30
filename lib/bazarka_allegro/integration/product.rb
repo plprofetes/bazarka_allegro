@@ -85,7 +85,7 @@ module BazarkaAllegro
         extension_for_product.details.each do |k,v|
           hash.merge!(k => v)
         end
-        hash.merge!( 'attribute_1' => self.name, 'attribute_24' => self.description_allegro,
+        hash.merge!( 'attribute_1' => self.name, 'attribute_24' => self.description_allegro(extension_for_product.allegro_template_id),
                       'attribute_8' => self.price )
 
         # jeśli śledzimy ilość w bazarce to bierzemy liczbę z produktu
