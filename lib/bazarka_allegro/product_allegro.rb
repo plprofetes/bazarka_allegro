@@ -227,7 +227,7 @@ module BazarkaAllegro
           type = options[option.gsub('attribute_', 'attributetype_')]
 
           if type == 'checkbox' # 6
-            my_item[:fvalue_int] = value.split("|").inject{|sum, x| sum.to_i+x.to_i} unless value.blank?
+            my_item[:fvalue_int] = value.to_s.split("|").inject{|sum, x| sum.to_i+x.to_i} unless value.blank?
           elsif type == 'string' or type == 'text (textarea)'    # 1, 8
             my_item[:fvalue_string] = value unless value.blank?
           elsif type == 'integer' or type == "radiobutton" or type == 'combobox' # 2, 5, 6
