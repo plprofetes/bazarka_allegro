@@ -64,6 +64,7 @@ module BazarkaAllegro
         else
           product.verify_add_item(options(extension))
         end
+        product
       end
 
       def delete_from_allegro
