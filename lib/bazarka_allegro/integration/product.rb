@@ -55,9 +55,15 @@ module BazarkaAllegro
         product.add_item(options)
       end
 
-      def verify_in_allegro
+      # weryfikujemy czy dany produkt przjedzie validacje allegro
+      # możemy podać jako parametr obiekt extension_for_product wtedy nie pobiera go z bazy danych
+      def verify_in_allegro(extension = nil)
         product = ProductAllegro.new(self.store)
-        product.verify_add_item(options)
+        if extension.nil?
+          product.verify_add_item(options)
+        else
+          product.verify_add_item(options(extension))
+        end
         product
       end
 
@@ -75,9 +81,15 @@ module BazarkaAllegro
         self.store.allegro  and self.extension_for_products.where(key: :allegro).where(published: true).present?
       end
 
-      def options
+      # tworzymy opcje na podstawie produktu i extension_for_products
+      # jeśli przekażemy jako parametr extension_for_product to wtedy nie pobieramy już go z bazy
+      def options(extension = nil)
         #store = self.store
-        extension_for_product = self.extension_for_products.where(key: :allegro).first
+        if extension.nil?
+          extension_for_product = self.extension_for_products.where(key: :allegro).first
+        else
+          extension_for_product = extension
+        end
         #extension = store.extensions.where(key: :allegro).first
 
 
