@@ -223,8 +223,8 @@ module BazarkaAllegro
       options.each do |option, value|
         if option =~ /^attribute_(\d+)$/
           my_item = get_skeleton
-          my_item[:fid] = option.gsub('attribute_','')
-          type = options[option.gsub('attribute_', 'attributetype_')]
+          my_item[:fid] = option.to_s.gsub('attribute_','')
+          type = options[option.to_s.gsub('attribute_', 'attributetype_')]
 
           if type == 'checkbox' # 6
             my_item[:fvalue_int] = value.to_s.split("|").inject{|sum, x| sum.to_i+x.to_i} unless value.blank?
