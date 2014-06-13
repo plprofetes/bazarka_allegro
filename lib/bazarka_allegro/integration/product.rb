@@ -95,7 +95,9 @@ module BazarkaAllegro
 
         hash ={}
         extension_for_product.details.each do |k,v|
-          hash.merge!(k => v)
+          if v.present?
+            hash.merge!(k => v)
+          end
         end
         hash.merge!( 'attribute_1' => hash['attribute_1'].to_s.gsub("{{product_name}}",self.name),
                      'attribute_24' => self.description_allegro(extension_for_product.allegro_template_id),
