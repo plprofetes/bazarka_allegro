@@ -21,7 +21,10 @@ module BazarkaAllegro
       end
     end
 
-
+    private
+    def clear_errors
+      @errors = nil
+    end
 
   end
 end
