@@ -2,8 +2,8 @@ module BazarkaAllegro
   class StoreAllegro
     attr_reader :errors
 
-    def initialize(store)
-      client = Hooks::Client.new(store)
+    def initialize
+      client = Hooks::Client.new(self)
       @user = Hooks::User.new(client)
       @errors = nil
     end
