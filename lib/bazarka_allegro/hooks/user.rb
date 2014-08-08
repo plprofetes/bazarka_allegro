@@ -14,44 +14,44 @@ module BazarkaAllegro
     end
 
     def company
-      my_data[:user_company]
+      @my_data[:user_company]
     end
 
     def id
-      my_data[:user_id]
+      @my_data[:user_id]
     end
 
     def rating
-      my_data[:user_rating]
+      @my_data[:user_rating]
     end
 
     def email
-      my_data[:user_email]
+      @my_data[:user_email]
     end
 
     def phone
-      my_data[:user_phone]
+      @my_data[:user_phone]
     end
 
 
     def birth_date
-      my_data[:user_birth_date]
+      @my_data[:user_birth_date]
     end
 
     def address
-      my_data[:user_address]
+      @my_data[:user_address]
     end
 
     def city
-      my_data[:user_city]
+      @my_data[:user_city]
     end
 
     def first_name
-      my_data[:user_first_name]
+      @my_data[:user_first_name]
     end
 
     def last_name
-      my_data[:user_last_name]
+      @my_data[:user_last_name]
     end
 
   end
