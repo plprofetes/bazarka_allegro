@@ -19,10 +19,17 @@ module BazarkaAllegro
       end
 
 
-
+      # wysylamy cos na allegro, jesli sie poprawnie nie wysle przechwytujemy error
+      # dodajemy go do produktu
       def send_to_allegro
         product = ProductAllegro.new(self.store)
-        product.add_item(options)
+        item_id = product.add_item(options)
+        if item_id
+          return item_id
+        else
+          errors.add :auction_id, product.errors
+        end
+        nil
       end
 
       # weryfikujemy czy dany produkt przjedzie validacje allegro
