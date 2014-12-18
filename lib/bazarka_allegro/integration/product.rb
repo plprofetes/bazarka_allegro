@@ -84,10 +84,22 @@ module BazarkaAllegro
         # jeśli nie śledzimy to bierzemy 999
         if self.inventory == 'tracks_this_products'
           hash.merge!('attribute_5' => self.quantity)
-          extension_for_product.update(allegro_quantity: self.quantity)
+          # sprawdzamy czy to jest obiekt zapisany w bazie danych czy nie
+          # jeśli nie jest w bazie to nie robimy update bo to zpisuje w bazie danych
+          if extension_for_product.id.present?
+            extension_for_product.update(allegro_quantity: self.quantity)
+          else
+            extension_for_product.allegro_quantity = self.quantity
+          end
         else
           hash.merge!('attribute_5' => 999)
-          extension_for_product.update(allegro_quantity: 999)
+          # sprawdzamy czy to jest obiekt zapisany w bazie danych czy nie
+          # jeśli nie jest w bazie to nie robimy update bo to zpisuje w bazie danych
+          if extension_for_product.id.present?
+            extension_for_product.update(allegro_quantity: 999)
+          else
+            extension_for_product.allegro_quantity = 999
+          end
         end
         # usuniecie ceny wywoławczej oraz ceny minimalnej
         hash.delete('attribute_6')
