@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "bazarka_allegro"
-  spec.version       = "0.0.1"
+  spec.version       = "0.0.2"
   spec.authors       = ["Jaroslaw Wozniak"]
   spec.email         = ["jarwoz@gmail.com"]
   spec.description   = %q{Api wrapper for allegro webapi written in ruby. Make it supereasy to interact with allegro api.}
@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
 
   spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency 'savon', '2.3.0'
+  spec.add_development_dependency 'savon', '~> 2.10.0'
   spec.add_development_dependency 'webmock'
   #spec.add_development_dependency 'minitest', '5.0.8'
   #spec.add_development_dependency 'vcr', '2.6.0'
