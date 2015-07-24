@@ -74,13 +74,13 @@ module BazarkaAllegro
     private
 
     def start_client
-      @client = Savon.client do
-        ssl_verify_mode :none
-        wsdl END_POINT
-        log  true
-        log_level  :debug
-        pretty_print_xml true
-        strip_namespaces true
+      @client = Savon.client do |c|
+        c.ssl_verify_mode :none
+        c.wsdl END_POINT
+        c.log  true
+        c.log_level  :debug
+        c.pretty_print_xml true
+        c.strip_namespaces true
       end
     end
     end
