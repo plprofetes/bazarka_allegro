@@ -1,17 +1,15 @@
 module BazarkaAllegro
   module Hooks
   class Client
-    if Rails.env == 'production'
-      END_POINT = 'https://webapi.allegro.pl/service.php?wsdl'
-    else
-      END_POINT = 'https://webapi.allegro.pl.webapisandbox.pl/service.php?wsdl'
-    end
 
+    # Endpoint is chosen by constructor parameter
+    PROD_END_POINT = 'https://webapi.allegro.pl/service.php?wsdl'
+    DEV_END_POINT = 'https://webapi.allegro.pl.webapisandbox.pl/service.php?wsdl'
 
     attr_accessor :user_login, :webapi_key, :local_version, :country_code
     attr_reader :client, :password, :session_handle
 
-    def initialize(store, general_credentials = {})
+    def initialize(store, general_credentials = {}, dev_env = false)
       if !store.nil?
         extension = store.extensions.where(key: :allegro).first
         #Rails.logger.info "------------------"
@@ -33,6 +31,7 @@ module BazarkaAllegro
         # store jest nilem. pobierz atrybuty podczas tworzenia obiektu
         yield self
       end
+      @dev_env = dev_env
       start_client
       query_system_stas(3,country_code, webapi_key)
       login
@@ -75,10 +74,10 @@ module BazarkaAllegro
 
     def start_client
       @client = Savon.client do |c|
-        c.ssl_verify_mode :none
-        c.wsdl END_POINT
+        c.ssl_verify_mode :none if @dev_env
+        c.wsdl @dev_env ? DEV_END_POINT : PROD_END_POINT
         c.log  true
-        c.log_level  :debug
+        c.log_level @dev_env ? :debug : :error
         c.pretty_print_xml true
         c.strip_namespaces true
       end
